@@ -1,0 +1,16 @@
+
+# 5 Analysis Models
+
+This section expands on what has to exist inside our system for the use cases in section 4 to happen, and how those parts talk to each other.
+
+## 5.1 Domain Model
+| Class | What it represents (one line) | Key attributes | Associations (with multiplicity |
+| --- | --- | --- | --- |
+| Student | Primary Actor | studentID, name, studentEmail | Student 0..*--1 LMS, Student 1 -- 0..* Enrollment, Student 1 -- 0..* Submission |
+| LMS | Supporting Actor | name, unavailableMessage | LMS 1--0..* Student, LMS--Enrollment, LMS--Course |
+| Course | Primary material for selected course | courseID | Course--LMS, Course 1--0..* Enrollment, Course 1--0..* Announcements, Course 1--0..*Assignment, Course 1--0..* Enrollment |
+| Enrollment | Enrollment status | enrollmentDate, status | Enrollment -- LMS, Enrollment 0..*--1 Student, Enrollment 0..*--1 Course |
+| Assignment | Primary material for selected assignment | asgnTitle, asgnDescription, dueDate | Assignment 0..*--1 Course, Assignment 1--0..* Submission |
+| Submission | Material for student submission to selected assignment | sTitle, fileType, fileLink, timeSubmitted | Submission 0..*--1 Student, Submission 0..*--1 Assignment |
+| Grade | Feedback on submission, from professor | feedback | Grade 0..1--1 Submission |
+| Announcement | Announcements of upcoming assignments, quizzes, etc. | annTitle, annDescription | Announcement 0..*--1 Course |
