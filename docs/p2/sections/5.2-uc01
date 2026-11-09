@@ -1,0 +1,31 @@
+### 5.2.2 UC-01 Use Cases Selected for Analysis
+
+**(a) Non-trivial steps.**
+
+| Step | Trivial/Non-Trivial | Why |
+|---|---|---|
+| (0) The system presents the student's available courses | Trivial | Identical lookup of the student courses as in message 2.2 |
+| (1) The student requests an organized list of assignments | Trivial| Student input that is received by the interface |
+| (2) The system presents the assignments in ascending order of due date, with course names, due dates and submission statuses | Non-Trivial | Needs the student's enrolled courses and course information, including assignments, due dates, grades, etc. |
+| (3) The student requests more information about one assignment | Trivial | Student input that is received by the interface |
+| (4) The system presents the assignment's instructions, due date and submission status | Non-Trivial | Needs to be able to pull the specified assignments details and the students submitted file for it |
+
+**(b) Scenario table.** Rows 2.3 to 2.5 repeat for each enrolled course and each of its assignments.
+
+| Step | Subject (who acts) | Subject action (what it does) | Other data / objects (what is used) | Object acted upon (who receives) |
+|---|---|---|---|---|
+| 0 | System | Presents the student's available courses and indicates that course-related questions can be asked | List of the student's enrolled courses (from Moodle) | Student |
+| 1 | Student | Selects a course | List of available courses | System |
+| 2 | System | Confirms the selected course and invites the student to ask a question | Selected course | Student |
+| 3 | Student | Submits a question about the course material | Question text; selected course | System |
+| 4 | System | Presents an answer supported by accessible course information and identifies the source material used | Accessible course information (from Moodle); source reference | Student |
+| 5 | Student | Asks to examine the supporting material | Source reference for the answer | System |
+| 6 | System | Identifies the relevant course page, assignment, or other source and confirms that the supporting material has been located | Source reference; course page, assignment, or other source (in Moodle) | Student |
+Alternate and exception flows
+| A1 | (at step 4) |	System | Explains that the available material does not support an answer and does not invent one. Ends with an insufficient-information notification. | Question text; retrieved course material (insufficient)	| Student |
+| A2 | (at step 4) |	System |	Informs the student that the information is temporarily unavailable and that the request was not completed. Ends with a failure notification.	| Failed retrieval of course information from Moodle	| Student |
+| A3 | (at step 2) |	System |	Denies access to the selected course, explains the restriction, and offers the student's available courses. Rejoins at step 1. | Student's course access rights; list of available courses	| Student |
+| A4 | (at step 6) |	System |	Explains that the source cannot be displayed and does not substitute unverified information. Ends with a source-unavailable notification.	| Source reference; inaccessible supporting material	| Student |
+**(c) Analysis sequence diagram.**
+
+![Analysis sequence diagram for UC-01](../diagrams/UC-01_Sequence_Diagram.png)
